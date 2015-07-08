@@ -1,5 +1,5 @@
 {
-  "name": "silverstripe/phpmd-silverstripe",
+  "name": "chillu/phpmd-silverstripe",
   "description": "Extended mess detection rules from phpmd for SilverStripe applications.",
   "keywords": [
       "silverstripe",
