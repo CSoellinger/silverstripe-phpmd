@@ -10,7 +10,7 @@ class UnusedInstancePrivateFieldTest extends AbstractProcessTest
     public function testRule()
     {
         $output = $this
-            ->runPhpmd('UnusedInstancePrivateFieldClass.php', 'silverstripe.xml')
+            ->runPhpmd('UnusedInstancePrivateFieldClass.php', 'all.xml')
             ->getOutput();
 
         $this->assertContains('UnusedInstancePrivateFieldClass.php:6	Avoid unused private instance fields such as \'$unusedInstanceField\'', $output);

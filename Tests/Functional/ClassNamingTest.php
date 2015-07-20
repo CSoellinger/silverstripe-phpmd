@@ -10,7 +10,7 @@ class ClassNamingTest extends AbstractProcessTest
     public function testRule()
     {
         $output = $this
-            ->runPhpmd('ClassNamingFail.php', 'silverstripe.xml')
+            ->runPhpmd('ClassNamingFail.php', 'all.xml')
             ->getOutput();
 
         $this->assertContains('ClassNamingFail.php:2	The class DifferentFromFilename is not named correctly for the file ClassNamingFail.php.', $output);
