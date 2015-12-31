@@ -17,5 +17,4 @@ class UnusedInstancePrivateFieldTest extends AbstractProcessTest
         $this->assertNotContains('$unused_static_field', $output);
         $this->assertNotContains('$usedInstanceField', $output);
     }
-
 }

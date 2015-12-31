@@ -1,14 +1,15 @@
 <?php
-class UnusedInstancePrivateFieldClass {
+class UnusedInstancePrivateFieldClass
+{
 
-	private static $unused_static_field = true;
+    private static $unused_static_field = true;
 
-	private $unusedInstanceField = true;
+    private $unusedInstanceField = true;
 
-	private $usedInstanceField = true;
+    private $usedInstanceField = true;
 
-	public function getUsedInstanceField() {
-		return $this->usedInstanceField;
-	}
-
+    public function getUsedInstanceField()
+    {
+        return $this->usedInstanceField;
+    }
 }

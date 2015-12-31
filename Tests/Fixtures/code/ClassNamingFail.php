@@ -1,2 +1,4 @@
 <?php
-class DifferentFromFilename {}
+class DifferentFromFilename
+{
+}

@@ -49,5 +49,4 @@ class UnusedInstancePrivateFieldTest extends AbstractApplyTest
     {
         return new UnusedInstancePrivateField();
     }
-
 }

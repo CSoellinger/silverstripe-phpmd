@@ -68,5 +68,4 @@ class CamelCaseInstancePropertyNameTest extends AbstractApplyTest
     {
         return new CamelCaseInstancePropertyName();
     }
-
 }

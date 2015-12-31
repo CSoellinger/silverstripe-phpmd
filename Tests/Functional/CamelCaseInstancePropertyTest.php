@@ -16,5 +16,4 @@ class CamelCaseInstancePropertyTest extends AbstractProcessTest
         $this->assertContains('Foo.php:2	The instance property $invalid_snake_case is not named in camelCase.', $output);
         $this->assertNotContains('$valid_snake_case', $output);
     }
-
 }

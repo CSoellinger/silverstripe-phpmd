@@ -51,5 +51,4 @@ class ClassNamingTest extends AbstractApplyTest
     {
         return new ClassNaming();
     }
-
 }
