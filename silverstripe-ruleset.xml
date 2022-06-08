@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<ruleset name="SilverStripe PHPMD rule set" xmlns="http://pmd.sf.net/ruleset/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd" xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+Extended mess detection rules from phpmd for SilverStripe (http://silverstripe.org) applications.
+
+Heavily inspired from: https://github.com/helpfulrobot/chillu-phpmd-silverstripe
+
+The rules make it easier for developers to comply with the SilverStripe Coding Conventions:
+https://docs.silverstripe.org/en/4/contributing/php_coding_conventions/
+
+It uses mostly standard PHPMD rules, with a few notable changes:
+
+* Excluded `CleanCode/StaticAccess`: Static access is a "feature" in SilverStripe
+* Replaced `CamelCaseMethodName` with `CamelCaseInstanceMethodName`: Static methods with named snake case a "feature"
+  in SilverStripe.
+* Replaced `CamelCasePropertyName` with `CamelCaseInstancePropertyName`: Static properties with snake case are a
+  "feature" in SilverStripe.
+* Replaced `CamelCaseVariableName` with `CamelCaseInstanceVariableName`: Static variable calls with snake case are a
+  "feature" in SilverStripe.
+* Replaced `UnusedPrivateField` with `UnusedInstancePrivateField`: Check to instance fields only. Unused private
+  statics are by design in SilverStripe.
+* Fixed short name variable rule for $db, $id und $i
+* Added class name check cause by SilverStripe design class name should match the file name
+    </description>
+
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Static access is a "feature" in SilverStripe -->
+        <exclude name="StaticAccess" />
+    </rule>
+
+    <rule ref="rulesets/codesize.xml" />
+
+    <rule ref="rulesets/controversial.xml">
+        <!-- Replaced with CamelCaseInstanceMethodName -->
+        <exclude name="CamelCaseMethodName" />
+        <!-- Replaced with CamelCaseInstancePropertyName -->
+        <exclude name="CamelCasePropertyName" />
+        <!-- Replaced with CamelCaseInstanceVariableName -->
+        <exclude name="CamelCaseVariableName" />
+    </rule>
+
+    <rule ref="rulesets/design.xml" />
+
+    <rule ref="rulesets/naming.xml">
+        <!-- Customised below -->
+        <exclude name="ShortVariable" />
+    </rule>
+
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" description="Comma-separated list of exceptions" value="db,id,i" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/unusedcode.xml">
+        <!-- Replaced with UnusedInstancePrivateField rule -->
+        <exclude name="UnusedPrivateField" />
+    </rule>
+
+    <rule name="ClassName" since="0.2" message="The class {0} is not named correctly for the file {1}." class="CSoellinger\SilverStripe\PHPMD\Rule\Naming\ClassNaming" externalInfoUrl="#">
+        <description>
+            <![CDATA[
+SilverStripe classes must start with the same name as the file they are in, followed optionally by an underscore and
+camel-cased append
+            ]]>
+        </description>
+        <priority>1</priority>
+    </rule>
+
+    <!-- Replaces CamelCasePropertyName -->
+    <rule name="CamelCaseInstancePropertyName" since="0.2" message="The instance property {0} is not named in camelCase." class="CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName" externalInfoUrl="#">
+        <description>
+            <![CDATA[
+It is considered best practice to use the camelCase notation to name attributes.
+Ignores statics, which are a design feature in SilverStripe.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="allow-underscore" description="Allow an optional, single underscore at the beginning." value="true" />
+        </properties>
+        <example>
+            <![CDATA[
+class ClassName {
+    protected $property_name; // Not allowed
+    private static $property_name; // Allowed
+}
+            ]]>
+        </example>
+    </rule>
+
+    <!-- Replaces CamelCaseMethodName -->
+    <rule name="CamelCaseInstanceMethodName" since="0.2" message="The instance method {0} is not named in camelCase." class="CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceMethodName" externalInfoUrl="#">
+        <description>
+            <![CDATA[
+It is considered best practice to use the camelCase notation to name methods.
+Ignores statics, which are a design feature in SilverStripe.
+            ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="allow-underscore" description="Allow an optional, single underscore at the beginning." value="false" />
+            <property name="allow-underscore-test" description="Is it allowed to have underscores in test method names." value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+class ClassName {
+    public function get_name() {
+    }
+}
+            ]]>
+        </example>
+    </rule>
+
+    <!-- Replaces CamelCaseVariableName -->
+    <rule name="CamelCaseInstanceVariableName" since="0.2" message="The instance variable {0} is not named in camelCase." class="CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName" externalInfoUrl="#">
+        <description>
+            <![CDATA[
+It is considered best practice to use the camelCase notation to name variables.
+Ignores static calls, which are a design feature in SilverStripe.
+      ]]>
+        </description>
+        <priority>1</priority>
+        <properties>
+            <property name="allow-underscore" description="Allow an optional, single underscore at the beginning." value="false" />
+        </properties>
+        <example>
+            <![CDATA[
+class ClassName {
+public function doSomething() {
+  $data_module = new DataModule();
+}
+}
+      ]]>
+        </example>
+    </rule>
+
+    <rule name="UnusedInstancePrivateField" since="0.2" message="Avoid unused private instance fields such as '{0}'." class="CSoellinger\SilverStripe\PHPMD\Rule\UnusedInstancePrivateField" externalInfoUrl="http://phpmd.org/rules/unusedcode.html#unusedprivatefield">
+        <description>
+            Detects when a private instance field is declared and/or assigned a value, but not used.
+            Ignores unused private statics, which are a design feature in SilverStripe.
+        </description>
+        <priority>3</priority>
+        <example>
+            <![CDATA[
+class Something
+{
+    private static $FOO = 2; // Unused
+    private $i = 5; // Unused
+    private $j = 6;
+    public function addOne()
+    {
+        return $this->j++;
+    }
+}
+            ]]>
+        </example>
+    </rule>
+</ruleset>

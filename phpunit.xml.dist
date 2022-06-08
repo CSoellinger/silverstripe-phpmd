@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd" backupGlobals="false" processIsolation="false" backupStaticAttributes="false" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" cacheResultFile="./build/cache/phpunit.result.cache" bootstrap="vendor/autoload.php" colors="true" verbose="true">
+    <!-- Testsuites -->
+    <testsuites>
+        <testsuite name="functional-tests">
+            <directory>./tests/Functional</directory>
+        </testsuite>
+        <testsuite name="unit-tests">
+            <directory>./tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <!-- Code coverage -->
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">./tests</directory>
+            <directory suffix=".php">./vendor</directory>
+        </exclude>
+    </coverage>
+</phpunit>
