@@ -40,7 +40,7 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
     /**
      * tbd.
      *
-     * @param AbstractNode $variable
+     * @param mixed $variable
      */
     protected function isStaticCall($variable): bool
     {
@@ -58,7 +58,7 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
     /**
      * tbd.
      *
-     * @param AbstractNode $variableNode
+     * @param mixed $variableNode
      *
      * @return ?ASTMemberPrimaryPrefix
      */
