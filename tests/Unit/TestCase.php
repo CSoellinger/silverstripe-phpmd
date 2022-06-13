@@ -4,7 +4,9 @@ namespace CSoellinger\SilverStripe\PHPMD\Tests\Unit;
 
 use CSoellinger\SilverStripe\PHPMD\Tests\TestCase as TestsTestCase;
 use ErrorException;
+use Exception;
 use Iterator;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -116,6 +118,12 @@ abstract class TestCase extends TestsTestCase
         );
         $parser->parse();
 
-        return $builder->getNamespaces()->current();
+        $ns = $builder->getNamespaces()->current();
+
+        if (!$ns) {
+            throw new Exception('Error getting namespace', 1);
+        }
+
+        return $ns;
     }
 }
