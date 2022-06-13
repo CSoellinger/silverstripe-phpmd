@@ -22,4 +22,4 @@ checks:
     duplication: true
 
 filter:
-  paths: [src/*, tests/*]
+  paths: [src/*, tests/Functional/*, tests/Unit/*]

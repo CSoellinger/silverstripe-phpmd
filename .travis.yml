@@ -1,8 +1,27 @@
 language: php
-php:
-  - 7.4
-  - 8.0
+
+matrix:
+  include:
+    - php: 7.4
+      env:
+        - PHPUNIT_COVERAGE_TEST=1
+        - PHPUNIT_TEST=1
+    - php: 8.0
+      env:
+        - PHPUNIT_TEST=1
+
 before_script:
-  - composer install
+  - phpenv rehash
+  - phpenv config-rm xdebug.ini
+  - pecl install pcov
+
+  - composer validate
+  - composer install --no-interaction --verbose --profile
+
 script:
-  - composer test
+  - if [[ $PHPUNIT_TES ]]; then composer test; fi
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then composer test-coverage-ci; fi
+
+after_success:
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/linux/codecov; chmod +x codecov; ./codecov -f ./build/coverage/clover.xml -F php; rm codecov; fi
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then wget https://scrutinizer-ci.com/ocular.phar; php ocular.phar code-coverage:upload --format=php-clover ./build/coverage/clover.xml; rm ocular.phar; fi
