@@ -44,10 +44,12 @@ abstract class TestCase extends TestsTestCase
     protected function assertStringContainsStringOnViolation($needle, $haystack, $violation)
     {
         if ($violation === true) {
-            return $this->assertStringContainsString($needle, $haystack);
+            $this->assertStringContainsString($needle, $haystack);
+
+            return;
         }
 
-        return $this->assertStringNotContainsString($needle, $haystack);
+        $this->assertStringNotContainsString($needle, $haystack);
     }
 
     protected function testFile($file, $violation)
