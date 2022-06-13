@@ -9,7 +9,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
  * tbd.
  *
  * @internal
- * @coversNothing
+ * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName
  */
 class CamelCaseInstancePropertyNameTest extends TestCase
 {

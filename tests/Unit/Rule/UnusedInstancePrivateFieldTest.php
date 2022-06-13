@@ -7,6 +7,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
 
 /**
  * Test case for the unused private field rule.
+ * @covers CSoellinger\SilverStripe\PHPMD\Rule\UnusedInstancePrivateField
  */
 class UnusedInstancePrivateFieldTest extends TestCase
 {

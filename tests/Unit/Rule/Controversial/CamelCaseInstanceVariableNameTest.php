@@ -2,7 +2,6 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Tests\Unit\Rule\Controversial;
 
-use CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName;
 use CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName;
 use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
 
@@ -10,7 +9,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
  * tbd.
  *
  * @internal
- * @coversNothing
+ * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName
  */
 class CamelCaseInstanceVariableNameTest extends TestCase
 {

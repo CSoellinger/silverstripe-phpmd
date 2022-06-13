@@ -9,7 +9,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
  * tbd.
  *
  * @internal
- * @coversNothing
+ * @covers CSoellinger\SilverStripe\PHPMD\Rule\Naming\ClassNaming
  */
 class ClassNamingTest extends TestCase
 {

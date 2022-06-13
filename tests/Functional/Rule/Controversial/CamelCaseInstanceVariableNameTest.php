@@ -10,7 +10,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Functional\TestCase;
  * tbd.
  *
  * @internal
- * @coversNothing
+ * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName
  */
 class CamelCaseInstanceVariableNameTest extends TestCase
 {
