@@ -5,7 +5,6 @@ namespace CSoellinger\SilverStripe\PHPMD\Tests\Unit;
 use CSoellinger\SilverStripe\PHPMD\Tests\TestCase as TestsTestCase;
 use ErrorException;
 use Iterator;
-use Mockery\MockInterface;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -13,6 +12,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Report;
+use PHPUnit\Framework\MockObject\MockObject;
 
 abstract class TestCase extends TestsTestCase
 {
@@ -38,7 +38,7 @@ abstract class TestCase extends TestsTestCase
     /**
      * @param int $violationNumber
      *
-     * @return MockInterface|Report
+     * @return MockObject|Report
      */
     protected function getReport($violationNumber = -1)
     {

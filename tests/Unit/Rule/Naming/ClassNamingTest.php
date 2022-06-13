@@ -2,16 +2,8 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Tests\Unit\Rule\Naming;
 
-use CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName;
 use CSoellinger\SilverStripe\PHPMD\Rule\Naming\ClassNaming;
 use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
-
-// use CSoellinger\SilverStripe\PHPMD\Rule\Naming\ClassNaming;
-// use Mockery;
-// use Mockery\MockInterface;
-// use PHPMD\Node\ClassNode;
-// use PHPMD\Node\MethodNode;
-// use SilverStripe\PHPMD\Tests\Unit\AbstractApplyTest;
 
 /**
  * tbd.
