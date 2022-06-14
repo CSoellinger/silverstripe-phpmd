@@ -28,6 +28,7 @@ class CamelCaseInstanceVariableNameTest extends TestCase
         return [
             ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesApplyForVariableNameWithUnderscore', false, 1], // error
             ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesApplyForVariableNameWithCapital', false, 1], // error
+            ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesNotApplyForStaticVariableWrite', false, 0], // error
             ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesNotApplyForStaticVariableAccess', false, 0],
             ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesNotApplyForValidVariableName', false, 0],
             ['Controversial\\CamelCaseInstanceVariableName\\RuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed', true, 0],
