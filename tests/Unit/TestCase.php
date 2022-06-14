@@ -69,7 +69,7 @@ abstract class TestCase extends TestsTestCase
         $parsedSource = $this->parseSource($this->getFixtureClassPath($fixtureClassPath));
         $node = $this->getNodeByName($parsedSource->getClasses(), $className);
 
-        return new ClassNode($node);
+        return new ClassNode(/** @scrutinizer ignore-type */ $node);
     }
 
     abstract protected function initRule();
