@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected function getFixtureClassPath($classPath)
+    protected function getFixtureClassPath(string $classPath): string
     {
         $fixtureClassPath = implode(DIRECTORY_SEPARATOR, [
             __DIR__,

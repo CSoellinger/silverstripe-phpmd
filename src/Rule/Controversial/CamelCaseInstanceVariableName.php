@@ -3,9 +3,13 @@
 namespace CSoellinger\SilverStripe\PHPMD\Rule\Controversial;
 
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTNode as ASTASTNode;
 use PDepend\Source\AST\ASTVariable;
 use PHPMD\AbstractNode;
+use PHPMD\Node\ASTNode;
 use PHPMD\Rule\Controversial\CamelCaseVariableName;
 use PHPMD\Rule\FunctionAware;
 use PHPMD\Rule\MethodAware;
@@ -25,6 +29,7 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
      */
     public function apply(AbstractNode $node)
     {
+        /** @var ASTNode $variable */
         foreach ($node->findChildrenOfTypeVariable() as $variable) {
             if (!$this->isValid($variable) && !$this->isStaticCall($variable)) {
                 $this->addViolation(
@@ -39,13 +44,11 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
 
     /**
      * tbd.
-     *
-     * @param mixed $variable
      */
-    protected function isStaticCall($variable): bool
+    protected function isStaticCall(AbstractNode $variable): bool
     {
+        /** @var ASTVariable $variableNode */
         $variableNode = $variable->getNode();
-
         $memberPrimaryPrefix = $this->getParentMemberPrimaryPrefix($variableNode);
 
         if ($memberPrimaryPrefix && $memberPrimaryPrefix->isStatic()) {
@@ -58,18 +61,19 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
     /**
      * tbd.
      *
-     * @param mixed $variableNode
-     *
      * @return ?ASTMemberPrimaryPrefix
      */
-    protected function getParentMemberPrimaryPrefix($variableNode)
+    protected function getParentMemberPrimaryPrefix(AbstractASTNode $variableNode)
     {
         if ($variableNode instanceof ASTMemberPrimaryPrefix) {
             return $variableNode;
         }
 
-        if ($variableNode->getParent()) {
-            return $this->getParentMemberPrimaryPrefix($variableNode->getParent());
+        /** @var ?AbstractASTNode $parent */
+        $parent = $variableNode->getParent();
+
+        if ($parent) {
+            return $this->getParentMemberPrimaryPrefix($parent);
         }
 
         return null;

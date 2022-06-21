@@ -16,14 +16,19 @@ class CamelCaseInstancePropertyNameTest extends TestCase
     /**
      * @dataProvider getFixtureClassPaths
      */
-    public function testRuleCamelCaseInstancePropertyName(string $classPath, bool $allowUnderscore, int $violationNumber)
+    public function testRuleCamelCaseInstancePropertyName(string $classPath, bool $allowUnderscore, int $violationNumber): void
     {
         $this->getRule()->setReport($this->getReport($violationNumber));
         $this->getRule()->addProperty('allow-underscore', (string) $allowUnderscore);
         $this->getRule()->apply($this->getClassNode($classPath));
     }
 
-    public function getFixtureClassPaths()
+    /**
+     * @return (bool|int|string)[][]
+     *
+     * @psalm-return array{0: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesApplyForPropertyNameWithCapital', 1: false, 2: 1}, 1: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesApplyForPropertyNameWithUnderscores', 1: false, 2: 1}, 2: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed', 1: false, 2: 1}, 3: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesNotApplyForValidPropertyName', 1: false, 2: 0}, 4: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesNotApplyForStaticPropertyNameWithUnderscores', 1: false, 2: 0}, 5: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed', 1: false, 2: 0}, 6: array{0: 'Controversial\CamelCaseInstancePropertyName\RuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed', 1: true, 2: 0}}
+     */
+    public function getFixtureClassPaths(): array
     {
         return [
             ['Controversial\\CamelCaseInstancePropertyName\\RuleDoesApplyForPropertyNameWithCapital', false, 1],
@@ -36,7 +41,7 @@ class CamelCaseInstancePropertyNameTest extends TestCase
         ];
     }
 
-    protected function initRule()
+    protected function initRule(): CamelCaseInstancePropertyName
     {
         return new CamelCaseInstancePropertyName();
     }

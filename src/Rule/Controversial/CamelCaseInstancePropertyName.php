@@ -2,6 +2,7 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Rule\Controversial;
 
+use PDepend\Source\AST\ASTProperty;
 use PHPMD\AbstractNode;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\Controversial\CamelCasePropertyName;
@@ -29,6 +30,7 @@ class CamelCaseInstancePropertyName extends CamelCasePropertyName implements Cla
             $pattern = '/^\$[_]?[a-z][a-zA-Z0-9]*$/';
         }
 
+        /** @var ASTProperty $property */
         foreach ($node->getProperties() as $property) {
             $propertyName = $property->getName();
 

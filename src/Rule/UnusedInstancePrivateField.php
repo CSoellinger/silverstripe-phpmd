@@ -2,6 +2,7 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Rule;
 
+use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
@@ -23,6 +24,7 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
     {
+        /** @var array<array-key,ASTNode> */
         $this->fields = parent::collectUnusedPrivateFields($class);
 
         $this->removePrivateStaticFields($class);
@@ -30,7 +32,7 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
         return $this->fields;
     }
 
-    protected function removePrivateStaticFields(ClassNode $class)
+    protected function removePrivateStaticFields(ClassNode $class): void
     {
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
             if ($declaration->isPrivate() && $declaration->isStatic()) {
@@ -39,9 +41,10 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
         }
     }
 
-    protected function removePrivateStaticField(ASTNode $declaration)
+    protected function removePrivateStaticField(ASTNode $declaration): void
     {
         $fields = $declaration->findChildrenOfType('VariableDeclarator');
+
         foreach ($fields as $field) {
             unset($this->fields[$field->getImage()]);
         }

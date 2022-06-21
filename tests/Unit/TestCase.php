@@ -6,11 +6,13 @@ use CSoellinger\SilverStripe\PHPMD\Tests\TestCase as TestsTestCase;
 use ErrorException;
 use Exception;
 use Iterator;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Report;
@@ -40,7 +42,7 @@ abstract class TestCase extends TestsTestCase
     /**
      * @param int $violationNumber
      *
-     * @return MockObject|Report
+     * @return Report
      */
     protected function getReport($violationNumber = -1)
     {
@@ -54,33 +56,53 @@ abstract class TestCase extends TestsTestCase
             $expects = $this->exactly($violationNumber);
         }
 
-        $report = $this->getMockBuilder('PHPMD\\Report')->getMock();
+        /** @psalm-var class-string */
+        $classString = '\\PHPMD\\Report';
+        $report = $this->getMockBuilder($classString)->getMock();
         $report
             ->expects($expects)
             ->method('addRuleViolation')
         ;
 
+        /** @var Report */
         return $report;
     }
 
-    protected function getClassNode($fixtureClassPath, $className = null)
+    /**
+     * @param null|string $className
+     */
+    protected function getClassNode(string $fixtureClassPath, ?string $className = null): ClassNode
     {
         $className = $className ?: basename(str_replace('\\', '/', $fixtureClassPath));
         $parsedSource = $this->parseSource($this->getFixtureClassPath($fixtureClassPath));
+        /** @var ASTClass $node */
         $node = $this->getNodeByName($parsedSource->getClasses(), $className);
 
         return new ClassNode(/** @scrutinizer ignore-type */ $node);
     }
 
-    abstract protected function initRule();
+    /**
+     * Undocumented function
+     *
+     * @return AbstractRule
+     * @psalm-return AbstractRule
+     */
+    abstract protected function initRule(): AbstractRule;
 
     protected function getRule(): AbstractRule
     {
         return $this->rule;
     }
 
-    private function getNodeByName(Iterator $nodes, $name)
+    /**
+     * Undocumented function
+     *
+     * @return ASTClass|AbstractNode
+     * @throws ErrorException
+     */
+    private function getNodeByName(Iterator $nodes, string $name)
     {
+        /** @var AbstractNode $node */
         foreach ($nodes as $node) {
             if ($node->getName() === $name) {
                 return $node;

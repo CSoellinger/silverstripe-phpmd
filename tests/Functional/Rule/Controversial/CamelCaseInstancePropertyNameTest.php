@@ -8,7 +8,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Functional\TestCase;
  * tbd.
  *
  * @internal
- * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName
+ * @covers \CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstancePropertyName
  */
 class CamelCaseInstancePropertyNameTest extends TestCase
 {
@@ -17,14 +17,21 @@ class CamelCaseInstancePropertyNameTest extends TestCase
     /**
      * @dataProvider getFixtureClassPaths
      */
-    public function testRuleCamelCaseInstancePropertyName(string $file, string $allowUnderscore, bool $violation)
+    public function testRuleCamelCaseInstancePropertyName(string $file, string $allowUnderscore, bool $violation): void
     {
         $this->rulesetProperties = ['CamelCaseInstancePropertyName' => ['allow-underscore' => $allowUnderscore]];
 
         $this->testFile($file, $violation);
     }
 
-    public function getFixtureClassPaths()
+    /**
+     * Get classes to test.
+     *
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{0: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForPropertyNameWithCapital', 1: 'false', 2: true}, 1: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForPropertyNameWithUnderscores', 1: 'false', 2: true}, 2: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed', 1: 'false', 2: true}, 3: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyName', 1: 'false', 2: false}, 4: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForStaticPropertyNameWithUnderscores', 1: 'false', 2: false}, 5: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed', 1: 'false', 2: false}, 6: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed', 1: 'true', 2: false}}
+     */
+    public function getFixtureClassPaths(): array
     {
         return [
             ['Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForPropertyNameWithCapital', 'false', true],

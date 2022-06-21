@@ -9,22 +9,36 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Functional\TestCase;
  * tbd.
  *
  * @internal
- * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceMethodName
+ * @covers \CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceMethodName
  */
 class CamelCaseInstanceMethodNameTest extends TestCase
 {
-    const VIOLATION_OUTPUT = 'CamelCaseInstanceMethodName  The instance method ';
+    public const VIOLATION_OUTPUT = 'CamelCaseInstanceMethodName  The instance method ';
 
     /**
      * @dataProvider getFixtureClassPaths
      */
-    public function testRuleCamelCaseInstanceMethodName(string $file, $allowUnderscore, $allowUnderscoreTest, bool $violation)
-    {
-        $this->rulesetProperties = ['CamelCaseInstanceMethodName' => ['allow-underscore' => $allowUnderscore, 'allow-underscore-test' => $allowUnderscoreTest]];
+    public function testRuleCamelCaseInstanceMethodName(
+        string $file,
+        string $allowUnderscore,
+        string $allowUnderscoreTest,
+        bool $violation
+    ): void {
+        $this->rulesetProperties = [
+            'CamelCaseInstanceMethodName' => [
+                'allow-underscore' => $allowUnderscore,
+                'allow-underscore-test' => $allowUnderscoreTest,
+            ],
+        ];
 
         $this->testFile($file, $violation);
     }
 
+    /**
+     * Get classes to test.
+     *
+     * @return array<array{0:string,1:string,2:string,3:bool}>
+     */
     public function getFixtureClassPaths()
     {
         return [

@@ -19,14 +19,21 @@ class CamelCaseInstanceVariableNameTest extends TestCase
     /**
      * @dataProvider getFixtureClassPaths
      */
-    public function testRuleCamelCaseInstanceVariableName(string $file, string $allowUnderscore, bool $violation)
+    public function testRuleCamelCaseInstanceVariableName(string $file, string $allowUnderscore, bool $violation): void
     {
         $this->rulesetProperties = ['CamelCaseInstanceVariableName' => ['allow-underscore' => $allowUnderscore]];
 
         $this->testFile($file, $violation);
     }
 
-    public function getFixtureClassPaths()
+    /**
+     * Get classes to test.
+     *
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{0: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesApplyForVariableNameWithUnderscore', 1: 'false', 2: true}, 1: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesApplyForVariableNameWithCapital', 1: 'false', 2: true}, 2: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForStaticVariableAccess', 1: 'false', 2: false}, 3: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForValidVariableName', 1: 'false', 2: false}, 4: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed', 1: 'true', 2: false}}
+     */
+    public function getFixtureClassPaths(): array
     {
         return [
             ['Controversial/CamelCaseInstanceVariableName/RuleDoesApplyForVariableNameWithUnderscore', 'false', true], // error

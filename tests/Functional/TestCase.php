@@ -8,17 +8,23 @@ use Symfony\Component\Process\Process;
 
 abstract class TestCase extends TestsTestCase
 {
+    /**
+     * @var array<string,array<string,string>>
+     */
     public $rulesetProperties = [];
 
     /**
-     * @var Process
+     * @var ?Process
      */
     protected $process;
 
     protected function tearDown(): void
     {
         $this->rulesetProperties = [];
-        $this->process->__destruct();
+
+        if ($this->process) {
+            $this->process->__destruct();
+        }
 
         if (file_exists($this->getTempRulesetPath())) {
             unlink($this->getTempRulesetPath());
@@ -27,13 +33,7 @@ abstract class TestCase extends TestsTestCase
 
     abstract public function getViolationOutput(): string;
 
-    /**
-     * @param string $filename
-     * @param mixed  $classPath
-     *
-     * @return Process
-     */
-    protected function runPhpmd($classPath)
+    protected function runPhpmd(string $classPath): Process
     {
         $this->process = new Process($this->getProcessCmd($classPath));
         $this->process->run();
@@ -41,7 +41,7 @@ abstract class TestCase extends TestsTestCase
         return $this->process;
     }
 
-    protected function assertStringContainsStringOnViolation($needle, $haystack, $violation)
+    protected function assertStringContainsStringOnViolation(string $needle, string $haystack, bool $violation): void
     {
         if ($violation === true) {
             $this->assertStringContainsString($needle, $haystack);
@@ -52,19 +52,22 @@ abstract class TestCase extends TestsTestCase
         $this->assertStringNotContainsString($needle, $haystack);
     }
 
-    protected function testFile($file, $violation)
+    protected function testFile(string $file, bool $violation): void
     {
         $output = $this->runPhpmd($file)->getOutput();
 
         $this->assertStringContainsStringOnViolation($this->getViolationOutput(), $output, $violation);
     }
 
+    /**
+     * @return array<string,array<string,string>>
+     */
     protected function getRulesetProperties()
     {
         return $this->rulesetProperties;
     }
 
-    private function getProcessCmd($classPath): array
+    private function getProcessCmd(string $classPath): array
     {
         return [
             $this->getPhpmdPath(),
@@ -82,7 +85,7 @@ abstract class TestCase extends TestsTestCase
     private function getRulesetPath(): string
     {
         if (count($this->getRulesetProperties()) === 0) {
-            return realpath(__DIR__ . '/../../silverstripe-ruleset.xml');
+            return (string) realpath(__DIR__ . '/../../silverstripe-ruleset.xml');
         }
 
         $string = file_get_contents(__DIR__ . '/../../silverstripe-ruleset.xml');
@@ -90,13 +93,14 @@ abstract class TestCase extends TestsTestCase
         $xml = new SimpleXMLElement($string);
 
         foreach ($this->getRulesetProperties() as $key => $properties) {
-            foreach ($properties as $propertyKey => $propertyValue) {
-                $property = $xml->xpath('//ruleset/rule[@name="' . $key . '"]/properties/property[@name="' . $propertyKey . '"]')[0];
-                $property['value'] = (string) $propertyValue;
+            foreach ($properties as $propertyKey => $_propertyValue) {
+                $xpath = '//ruleset/rule[@name="' . $key . '"]/properties/property[@name="' . $propertyKey . '"]';
+                $_property = $xml->xpath($xpath)[0];
+                $_property['value'] = $_propertyValue;
             }
         }
 
-        $string = $xml->asXML();
+        $string = (string) $xml->asXML();
         $string = str_replace('ns=', 'xmlns=', $string);
 
         file_put_contents($this->getTempRulesetPath(), $string);
@@ -104,7 +108,7 @@ abstract class TestCase extends TestsTestCase
         return $this->getTempRulesetPath();
     }
 
-    private function getTempRulesetPath()
+    private function getTempRulesetPath(): string
     {
         return sys_get_temp_dir() . DIRECTORY_SEPARATOR . str_replace('\\', '_', get_class($this)) . '.xml';
     }

@@ -28,9 +28,8 @@ class CamelCaseInstanceMethodName extends CamelCaseMethodName implements ClassAw
         /** @var ASTMethod $methodNode */
         $methodNode = $node->getNode();
 
-        if (
-            $node->getType() === 'method'
-            && !in_array($methodName, $this->ignoredMethods)
+        if ($node->getType() === 'method'
+            && !in_array($methodName, (array) $this->ignoredMethods)
             && !$this->isValid($methodName)
             && !$methodNode->isStatic()
         ) {
