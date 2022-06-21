@@ -27,11 +27,7 @@ class CamelCaseInstanceVariableNameTest extends TestCase
     }
 
     /**
-     * Get classes to test.
-     *
-     * @return (bool|string)[][]
-     *
-     * @psalm-return array{0: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesApplyForVariableNameWithUnderscore', 1: 'false', 2: true}, 1: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesApplyForVariableNameWithCapital', 1: 'false', 2: true}, 2: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForStaticVariableAccess', 1: 'false', 2: false}, 3: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForValidVariableName', 1: 'false', 2: false}, 4: array{0: 'Controversial/CamelCaseInstanceVariableName/RuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed', 1: 'true', 2: false}}
+     * @return array<array{0:string,1:string,2:bool}>
      */
     public function getFixtureClassPaths(): array
     {

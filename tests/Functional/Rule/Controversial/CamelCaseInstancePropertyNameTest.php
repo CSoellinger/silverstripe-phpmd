@@ -25,11 +25,7 @@ class CamelCaseInstancePropertyNameTest extends TestCase
     }
 
     /**
-     * Get classes to test.
-     *
-     * @return (bool|string)[][]
-     *
-     * @psalm-return array{0: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForPropertyNameWithCapital', 1: 'false', 2: true}, 1: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForPropertyNameWithUnderscores', 1: 'false', 2: true}, 2: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesApplyForValidPropertyNameWithUnderscoreWhenNotAllowed', 1: 'false', 2: true}, 3: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyName', 1: 'false', 2: false}, 4: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForStaticPropertyNameWithUnderscores', 1: 'false', 2: false}, 5: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyNameWithNoUnderscoreWhenAllowed', 1: 'false', 2: false}, 6: array{0: 'Controversial/CamelCaseInstancePropertyName/RuleDoesNotApplyForValidPropertyNameWithUnderscoreWhenAllowed', 1: 'true', 2: false}}
+     * @return array<array{0:string,1:string,2:bool}>
      */
     public function getFixtureClassPaths(): array
     {

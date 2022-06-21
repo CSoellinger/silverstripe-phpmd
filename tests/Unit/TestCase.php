@@ -16,7 +16,6 @@ use PHPMD\AbstractNode;
 use PHPMD\AbstractRule;
 use PHPMD\Node\ClassNode;
 use PHPMD\Report;
-use PHPUnit\Framework\MockObject\MockObject;
 
 abstract class TestCase extends TestsTestCase
 {
@@ -68,13 +67,11 @@ abstract class TestCase extends TestsTestCase
         return $report;
     }
 
-    /**
-     * @param null|string $className
-     */
     protected function getClassNode(string $fixtureClassPath, ?string $className = null): ClassNode
     {
         $className = $className ?: basename(str_replace('\\', '/', $fixtureClassPath));
         $parsedSource = $this->parseSource($this->getFixtureClassPath($fixtureClassPath));
+
         /** @var ASTClass $node */
         $node = $this->getNodeByName($parsedSource->getClasses(), $className);
 
@@ -82,9 +79,8 @@ abstract class TestCase extends TestsTestCase
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @return AbstractRule
      * @psalm-return AbstractRule
      */
     abstract protected function initRule(): AbstractRule;
@@ -95,10 +91,11 @@ abstract class TestCase extends TestsTestCase
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @return ASTClass|AbstractNode
      * @throws ErrorException
+     *
+     * @return AbstractNode|ASTClass
      */
     private function getNodeByName(Iterator $nodes, string $name)
     {

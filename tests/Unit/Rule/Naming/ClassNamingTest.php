@@ -23,9 +23,7 @@ class ClassNamingTest extends TestCase
     }
 
     /**
-     * @return (int|string)[][]
-     *
-     * @psalm-return array{0: array{0: 'Naming\ClassNaming\RuleDoesApplyWithWrongFileName', 1: 'WrongClassName', 2: 1}}
+     * @return array<array{0:string,1:string,2:int}>
      */
     public function getFixtureClassPaths()
     {

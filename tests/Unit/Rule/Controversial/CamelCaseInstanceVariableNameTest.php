@@ -9,7 +9,7 @@ use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
  * tbd.
  *
  * @internal
- * @covers CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName
+ * @covers \CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceVariableName
  */
 class CamelCaseInstanceVariableNameTest extends TestCase
 {
@@ -24,9 +24,7 @@ class CamelCaseInstanceVariableNameTest extends TestCase
     }
 
     /**
-     * @return (bool|int|string)[][]
-     *
-     * @psalm-return array{0: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesApplyForVariableNameWithUnderscore', 1: false, 2: 1}, 1: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesApplyForVariableNameWithCapital', 1: false, 2: 1}, 2: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesNotApplyForStaticVariableWrite', 1: false, 2: 0}, 3: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesNotApplyForStaticVariableAccess', 1: false, 2: 0}, 4: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesNotApplyForValidVariableName', 1: false, 2: 0}, 5: array{0: 'Controversial\CamelCaseInstanceVariableName\RuleDoesNotApplyForValidVariableNameWithUnderscoreWhenAllowed', 1: true, 2: 0}}
+     * @return array<array{0:string,1:bool,2:int}>
      */
     public function getFixtureClassPaths(): array
     {
