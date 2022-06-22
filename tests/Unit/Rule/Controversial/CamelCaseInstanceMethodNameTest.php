@@ -5,6 +5,7 @@ namespace CSoellinger\SilverStripe\PHPMD\Tests\Unit\Rule\Controversial;
 use CSoellinger\SilverStripe\PHPMD\Rule\Controversial\CamelCaseInstanceMethodName;
 use CSoellinger\SilverStripe\PHPMD\Tests\Unit\TestCase;
 use PHPMD\AbstractNode;
+use PHPMD\Node\MethodNode;
 
 /**
  * tbd.
@@ -23,10 +24,13 @@ class CamelCaseInstanceMethodNameTest extends TestCase
         string $allowUnderscoreTest,
         int $violationNumber
     ): void {
+        /** @var AbstractNode $method */
+        $method = $this->getMethod($classPath);
+
         $this->getRule()->setReport($this->getReport($violationNumber));
         $this->getRule()->addProperty('allow-underscore', $allowUnderscore);
         $this->getRule()->addProperty('allow-underscore-test', $allowUnderscoreTest);
-        $this->getRule()->apply($this->getMethod($classPath));
+        $this->getRule()->apply($method);
     }
 
     /**
@@ -115,10 +119,15 @@ class CamelCaseInstanceMethodNameTest extends TestCase
         return new CamelCaseInstanceMethodName();
     }
 
-    protected function getMethod(string $classPath): AbstractNode
+    protected function getMethod(string $classPath): ?MethodNode
     {
         $methods = $this->getClassNode($classPath)->getMethods();
+        $method = reset($methods);
 
-        return reset($methods);
+        if ($method === false) {
+            return null;
+        }
+
+        return $method;
     }
 }

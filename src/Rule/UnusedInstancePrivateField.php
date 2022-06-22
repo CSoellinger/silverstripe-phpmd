@@ -2,6 +2,7 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Rule;
 
+use PDepend\Source\AST\ASTFieldDeclaration;
 use PHPMD\Node\AbstractNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
@@ -24,8 +25,9 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
      */
     protected function collectUnusedPrivateFields(ClassNode $class)
     {
-        /** @var array<array-key,ASTNode> */
-        $this->fields = parent::collectUnusedPrivateFields($class);
+        /** @var ASTNode[] $fields */
+        $fields = parent::collectUnusedPrivateFields($class);
+        $this->fields = $fields;
 
         $this->removePrivateStaticFields($class);
 
@@ -34,6 +36,7 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
 
     protected function removePrivateStaticFields(ClassNode $class): void
     {
+        /** @var ASTFieldDeclaration $declaration */
         foreach ($class->findChildrenOfType('FieldDeclaration') as $declaration) {
             if ($declaration->isPrivate() && $declaration->isStatic()) {
                 $this->removePrivateStaticField($declaration);
@@ -41,9 +44,16 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
         }
     }
 
-    protected function removePrivateStaticField(ASTNode $declaration): void
+    /**
+     * Undocumented function
+     *
+     * @param ASTFieldDeclaration|ASTNode $declaration
+     */
+    protected function removePrivateStaticField($declaration): void
     {
-        $fields = $declaration->findChildrenOfType('VariableDeclarator');
+        /** @psalm-var class-string<NEVER> */
+        $type = 'VariableDeclarator';
+        $fields = $declaration->findChildrenOfType($type);
 
         foreach ($fields as $field) {
             unset($this->fields[$field->getImage()]);

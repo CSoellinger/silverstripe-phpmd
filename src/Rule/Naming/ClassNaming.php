@@ -12,7 +12,7 @@ class ClassNaming extends AbstractRule implements ClassAware
     {
         $filename = $node->getFileName();
 
-        if (!$filename) {
+        if ($filename === null) {
             $this->addViolation(
                 $node,
                 [
@@ -26,7 +26,7 @@ class ClassNaming extends AbstractRule implements ClassAware
 
         $base = basename($filename, '.php');
 
-        if (!preg_match('/^(SS_)?'.$base.'(_[A-Z][a-zA-Z0-9]+)?$/', $node->getName())) {
+        if ((bool) preg_match('/^(SS_)?'.$base.'(_[A-Z][a-zA-Z0-9]+)?$/', $node->getName()) === false) {
             $this->addViolation(
                 $node,
                 [

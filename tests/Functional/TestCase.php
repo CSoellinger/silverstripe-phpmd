@@ -22,7 +22,7 @@ abstract class TestCase extends TestsTestCase
     {
         $this->rulesetProperties = [];
 
-        if ($this->process) {
+        if ($this->process !== null) {
             $this->process->__destruct();
         }
 
@@ -44,12 +44,12 @@ abstract class TestCase extends TestsTestCase
     protected function assertStringContainsStringOnViolation(string $needle, string $haystack, bool $violation): void
     {
         if ($violation === true) {
-            $this->assertStringContainsString($needle, $haystack);
+            self::assertStringContainsString($needle, $haystack);
 
             return;
         }
 
-        $this->assertStringNotContainsString($needle, $haystack);
+        self::assertStringNotContainsString($needle, $haystack);
     }
 
     protected function testFile(string $file, bool $violation): void
@@ -67,6 +67,9 @@ abstract class TestCase extends TestsTestCase
         return $this->rulesetProperties;
     }
 
+    /**
+     * @return string[]
+     */
     private function getProcessCmd(string $classPath): array
     {
         return [
@@ -79,7 +82,7 @@ abstract class TestCase extends TestsTestCase
 
     private function getPhpmdPath(): string
     {
-        return realpath(__DIR__ . '/../../vendor/bin/phpmd');
+        return (string) realpath(__DIR__ . '/../../vendor/bin/phpmd');
     }
 
     private function getRulesetPath(): string
@@ -88,13 +91,14 @@ abstract class TestCase extends TestsTestCase
             return (string) realpath(__DIR__ . '/../../silverstripe-ruleset.xml');
         }
 
-        $string = file_get_contents(__DIR__ . '/../../silverstripe-ruleset.xml');
+        $string = (string) file_get_contents(__DIR__ . '/../../silverstripe-ruleset.xml');
         $string = str_replace('xmlns=', 'ns=', $string);
         $xml = new SimpleXMLElement($string);
 
         foreach ($this->getRulesetProperties() as $key => $properties) {
             foreach ($properties as $propertyKey => $_propertyValue) {
                 $xpath = '//ruleset/rule[@name="' . $key . '"]/properties/property[@name="' . $propertyKey . '"]';
+                // var_dump($xml->xpath($xpath));
                 $_property = $xml->xpath($xpath)[0];
                 $_property['value'] = $_propertyValue;
             }

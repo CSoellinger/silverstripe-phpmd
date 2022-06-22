@@ -51,7 +51,7 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
         $variableNode = $variable->getNode();
         $memberPrimaryPrefix = $this->getParentMemberPrimaryPrefix($variableNode);
 
-        if ($memberPrimaryPrefix && $memberPrimaryPrefix->isStatic()) {
+        if ($memberPrimaryPrefix !== null && $memberPrimaryPrefix->isStatic()) {
             return true;
         }
 
@@ -72,7 +72,7 @@ class CamelCaseInstanceVariableName extends CamelCaseVariableName implements Met
         /** @var ?AbstractASTNode $parent */
         $parent = $variableNode->getParent();
 
-        if ($parent) {
+        if ($parent !== null) {
             return $this->getParentMemberPrimaryPrefix($parent);
         }
 

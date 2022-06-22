@@ -29,7 +29,7 @@ class CamelCaseInstanceMethodName extends CamelCaseMethodName implements ClassAw
         $methodNode = $node->getNode();
 
         if ($node->getType() === 'method'
-            && !in_array($methodName, (array) $this->ignoredMethods)
+            && !in_array($methodName, (array) $this->ignoredMethods, true)
             && !$this->isValid($methodName)
             && !$methodNode->isStatic()
         ) {

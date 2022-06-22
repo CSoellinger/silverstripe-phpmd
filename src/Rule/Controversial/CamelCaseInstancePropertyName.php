@@ -2,8 +2,10 @@
 
 namespace CSoellinger\SilverStripe\PHPMD\Rule\Controversial;
 
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTProperty;
 use PHPMD\AbstractNode;
+use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
 use PHPMD\Rule\Controversial\CamelCasePropertyName;
 
@@ -23,18 +25,20 @@ class CamelCaseInstancePropertyName extends CamelCasePropertyName implements Cla
      */
     public function apply(AbstractNode $node)
     {
+        /** @var ASTClass $classNode */
+        $classNode = $node;
         $allowUnderscore = $this->getBooleanProperty('allow-underscore');
 
         $pattern = '/^\$[a-z][a-zA-Z0-9]*$/';
         if ($allowUnderscore === true) {
             $pattern = '/^\$[_]?[a-z][a-zA-Z0-9]*$/';
         }
-
+// var_dump(gettype($classNode), get_class($classNode));
         /** @var ASTProperty $property */
-        foreach ($node->getProperties() as $property) {
+        foreach ($classNode->getProperties() as $property) {
             $propertyName = $property->getName();
 
-            if (!$property->isStatic() && !preg_match($pattern, $propertyName)) {
+            if (!$property->isStatic() && (bool) preg_match($pattern, $propertyName) === false) {
                 $this->addViolation(
                     $node,
                     [

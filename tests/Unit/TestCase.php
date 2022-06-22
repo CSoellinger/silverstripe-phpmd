@@ -46,13 +46,13 @@ abstract class TestCase extends TestsTestCase
     protected function getReport($violationNumber = -1)
     {
         if ($violationNumber === self::AL_LEAST_ONE_VIOLATION) {
-            $expects = $this->atLeastOnce();
+            $expects = self::atLeastOnce();
         } elseif ($violationNumber === self::NO_VIOLATION) {
-            $expects = $this->never();
+            $expects = self::never();
         } elseif ($violationNumber === self::ONE_VIOLATION) {
-            $expects = $this->once();
+            $expects = self::once();
         } else {
-            $expects = $this->exactly($violationNumber);
+            $expects = self::exactly($violationNumber);
         }
 
         /** @psalm-var class-string */
@@ -95,7 +95,7 @@ abstract class TestCase extends TestsTestCase
      *
      * @throws ErrorException
      *
-     * @return AbstractNode|ASTClass
+     * @return AbstractNode
      */
     private function getNodeByName(Iterator $nodes, string $name)
     {
@@ -139,7 +139,7 @@ abstract class TestCase extends TestsTestCase
 
         $ns = $builder->getNamespaces()->current();
 
-        if (!$ns) {
+        if ($ns === false) {
             throw new Exception('Error getting namespace', 1);
         }
 
