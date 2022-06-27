@@ -91,6 +91,7 @@
         "lint:style": "phpcs --colors --cache=build/cache/phpcs.cache",
         "lint:syntax": "parallel-lint --colors src tests/Functional tests/Unit tests/TestCase.php",
         "test": [
+            "@analyze",
             "@lint",
             "@test:unit"
         ],
