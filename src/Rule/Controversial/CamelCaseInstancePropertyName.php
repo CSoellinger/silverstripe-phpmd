@@ -36,6 +36,7 @@ class CamelCaseInstancePropertyName extends CamelCasePropertyName implements Cla
 // var_dump(gettype($classNode), get_class($classNode));
         /** @var ASTProperty $property */
         foreach ($classNode->getProperties() as $property) {
+            /** @phpstan-ignore-next-line */
             $propertyName = $property->getName();
 
             if (!$property->isStatic() && (bool) preg_match($pattern, $propertyName) === false) {

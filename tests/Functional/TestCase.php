@@ -98,8 +98,9 @@ abstract class TestCase extends TestsTestCase
         foreach ($this->getRulesetProperties() as $key => $properties) {
             foreach ($properties as $propertyKey => $_propertyValue) {
                 $xpath = '//ruleset/rule[@name="' . $key . '"]/properties/property[@name="' . $propertyKey . '"]';
-                // var_dump($xml->xpath($xpath));
+                /** @phpstan-ignore-next-line */
                 $_property = $xml->xpath($xpath)[0];
+                /** @phpstan-ignore-next-line */
                 $_property['value'] = $_propertyValue;
             }
         }

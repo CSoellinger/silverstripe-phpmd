@@ -3,7 +3,7 @@
 namespace CSoellinger\SilverStripe\PHPMD\Rule;
 
 use PDepend\Source\AST\ASTFieldDeclaration;
-use PHPMD\Node\AbstractNode;
+use PDepend\Source\AST\ASTNode as PdASTNode;
 use PHPMD\Node\ASTNode;
 use PHPMD\Node\ClassNode;
 use PHPMD\Rule\ClassAware;
@@ -45,13 +45,13 @@ class UnusedInstancePrivateField extends UnusedPrivateField implements ClassAwar
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param ASTFieldDeclaration|ASTNode $declaration
      */
     protected function removePrivateStaticField($declaration): void
     {
-        /** @psalm-var class-string<NEVER> */
+        /** @psalm-var class-string<PdASTNode> $type */
         $type = 'VariableDeclarator';
         $fields = $declaration->findChildrenOfType($type);
 
