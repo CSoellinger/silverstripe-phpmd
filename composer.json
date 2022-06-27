@@ -49,6 +49,9 @@
         "symfony/process": "^5.4",
         "vimeo/psalm": "^4"
     },
+    "replace": {
+        "chillu/phpmd-silverstripe": "*"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "autoload": {
