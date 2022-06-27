@@ -1,5 +1,7 @@
 # PHPMD rules for SilverStripe
 
+[![Build Status](https://app.travis-ci.com/CSoellinger/silverstripe-phpmd.svg?branch=main)](https://app.travis-ci.com/CSoellinger/silverstripe-phpmd)
+
 This repo was heavily inspired and forked from https://github.com/helpfulrobot/chillu-phpmd-silverstripe
 
 Extended mess detection rules from phpmd for SilverStripe (http://silverstripe.org) applications.
