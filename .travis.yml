@@ -20,7 +20,7 @@ before_script:
 
 script:
   - if [[ $PHPUNIT_TES ]]; then composer test; fi
-  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then composer test-coverage-ci; fi
+  - if [[ $PHPUNIT_COVERAGE_TEST ]]; then composer test:coverage-ci; fi
 
 after_success:
   - if [[ $PHPUNIT_COVERAGE_TEST ]]; then curl -Os https://uploader.codecov.io/latest/linux/codecov; chmod +x codecov; ./codecov -f ./build/coverage/clover.xml -F php; rm codecov; fi
